@@ -348,11 +348,10 @@ class ChatLogic extends GetxController {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: c,
-        borderRadius: const BorderRadius.all(Radius.circular(5)),
+        borderRadius: const BorderRadius.all(Radius.circular(25)),
       ),
-      child: SelectableText(
+      child: Text(
         name,
-        enableInteractiveSelection: true,
         style: const TextStyle(
           color: Colors.white,
         ),
