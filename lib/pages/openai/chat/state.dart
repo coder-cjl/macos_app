@@ -7,5 +7,4 @@ class ChatState {
   var items = [].obs;
   ScrollController scrollController = ScrollController();
   ListObserverController? observerController;
-  ScrollController markdownController = ScrollController();
 }
