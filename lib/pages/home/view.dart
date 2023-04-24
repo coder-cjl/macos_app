@@ -1,5 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chatgpt_mac/pages/openai/auido/view.dart';
 import 'package:flutter_chatgpt_mac/pages/openai/chat/view.dart';
+import 'package:flutter_chatgpt_mac/pages/openai/image/view.dart';
 import 'package:flutter_chatgpt_mac/pages/openai/login/manager.dart';
 import 'package:flutter_chatgpt_mac/pages/openai/login/view.dart';
 import 'package:flutter_chatgpt_mac/pages/other/view.dart';
@@ -24,7 +27,21 @@ class HomePage extends StatelessWidget {
             () => SidebarItems(
               items: const [
                 SidebarItem(
-                  label: Text("Chat Open Ai"),
+                  label: Text("ChatGPT"),
+                  disclosureItems: [
+                    SidebarItem(
+                      label: Text("Text"),
+                      leading: MacosIcon(CupertinoIcons.text_bubble),
+                    ),
+                    SidebarItem(
+                      label: Text("Image"),
+                      leading: MacosIcon(CupertinoIcons.photo),
+                    ),
+                    SidebarItem(
+                      label: Text("Audio"),
+                      leading: MacosIcon(CupertinoIcons.music_albums),
+                    ),
+                  ],
                 ),
                 SidebarItem(
                   label: Text("Other"),
@@ -46,11 +63,12 @@ class HomePage extends StatelessWidget {
               () => UserOpenAiUtils.instance.isLoginObs.value
                   ? MacosScaffold(
                       toolBar: ToolBar(
-                        title: const Text("陈三傻"),
+                        title: const Text("文字助手"),
                         actions: [
                           ToolBarIconButton(
                             label: "Exit",
-                            icon: const MacosIcon(Icons.exit_to_app_sharp),
+                            icon: const MacosIcon(
+                                CupertinoIcons.person_add_solid),
                             showLabel: false,
                             tooltipMessage: "Exit",
                             onPressed: () {
@@ -67,6 +85,48 @@ class HomePage extends StatelessWidget {
                           },
                         ),
                       ],
+                    )
+                  : ContentArea(builder: (context, controller) {
+                      return LoginPage();
+                    }),
+            ),
+            Obx(
+              () => UserOpenAiUtils.instance.isLoginObs.value
+                  ? MacosScaffold(
+                      toolBar: ToolBar(
+                        title: const Text("图片助手"),
+                        actions: [
+                          ToolBarIconButton(
+                            label: "Exit",
+                            icon: const MacosIcon(
+                                CupertinoIcons.person_add_solid),
+                            showLabel: false,
+                            tooltipMessage: "Exit",
+                            onPressed: () {
+                              logic.chatgptLogout();
+                            },
+                          ),
+                        ],
+                      ),
+                      backgroundColor: Colors.black12,
+                      children: [
+                        ContentArea(
+                          builder: (context, controller) {
+                            return ImagePage();
+                          },
+                        ),
+                      ],
+                    )
+                  : ContentArea(builder: (context, controller) {
+                      return LoginPage();
+                    }),
+            ),
+            Obx(
+              () => UserOpenAiUtils.instance.isLoginObs.value
+                  ? ContentArea(
+                      builder: (context, controller) {
+                        return AuidoPage();
+                      },
                     )
                   : ContentArea(builder: (context, controller) {
                       return LoginPage();
