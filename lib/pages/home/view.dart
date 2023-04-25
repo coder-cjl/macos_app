@@ -27,21 +27,16 @@ class HomePage extends StatelessWidget {
             () => SidebarItems(
               items: const [
                 SidebarItem(
-                  label: Text("ChatGPT"),
-                  disclosureItems: [
-                    SidebarItem(
-                      label: Text("Text"),
-                      leading: MacosIcon(CupertinoIcons.text_bubble),
-                    ),
-                    SidebarItem(
-                      label: Text("Image"),
-                      leading: MacosIcon(CupertinoIcons.photo),
-                    ),
-                    SidebarItem(
-                      label: Text("Audio"),
-                      leading: MacosIcon(CupertinoIcons.music_albums),
-                    ),
-                  ],
+                  label: Text("Text"),
+                  leading: MacosIcon(CupertinoIcons.text_bubble),
+                ),
+                SidebarItem(
+                  label: Text("Image"),
+                  leading: MacosIcon(CupertinoIcons.photo),
+                ),
+                SidebarItem(
+                  label: Text("Audio"),
+                  leading: MacosIcon(CupertinoIcons.music_albums),
                 ),
                 SidebarItem(
                   label: Text("Other"),
