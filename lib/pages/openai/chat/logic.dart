@@ -1,8 +1,7 @@
-import 'package:dio/adapter.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chatgpt_mac/pages/openai/login/manager.dart';
+import 'package:flutter_chatgpt_mac/pages/network/api.dart';
+import 'package:flutter_chatgpt_mac/pages/network/url.dart';
 import 'package:get/get.dart';
 import 'package:luca_flutter_common/luca_loading.dart';
 import 'package:scrollview_observer/scrollview_observer.dart';
@@ -57,61 +56,33 @@ class ChatLogic extends GetxController {
 
   void _req(String content) async {
     LucaLoading.show(timeout: 60);
-    try {
-      var req = Dio();
-      (req.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
-          (client) {
-        client.findProxy = (url) {
-          return UserOpenAiUtils.instance.user?.proxy ?? "";
-        };
-        client.badCertificateCallback = (cert, host, port) {
-          return true;
-        };
-        return client;
-      };
-
-      var res = await req.post(
-        "https://api.openai.com/v1/chat/completions",
-        data: {
-          "model": "gpt-3.5-turbo",
-          "messages": [
-            {
-              "role": "user",
-              "content": content,
-            },
-          ],
-        },
-        options: Options(
-          headers: {
-            "Authorization":
-                "Bearer ${UserOpenAiUtils.instance.user?.token ?? ""}",
-            "Content-Type": "application/json",
+    var res = await Api().post(
+      ApiURL.chatText,
+      data: {
+        "model": "gpt-3.5-turbo",
+        "messages": [
+          {
+            "role": "user",
+            "content": content,
           },
-        ),
-      );
+        ],
+      },
+    );
 
-      req.close();
-
-      if (res.statusCode == 200) {
-        LucaLoading.dismiss();
-        List choices = res.data["choices"];
-        if (choices.isNotEmpty) {
-          String? answer = choices.first["message"]["content"];
-          if (answer != null) {
-            TextModel item =
-                TextModel(sendType: SendType.other, content: answer);
-            state.items.add(item);
-            state.items.refresh();
-            toBottomOffset();
-          }
-        }
-      } else {
-        LucaLoading.dismiss();
-        print(res.data);
-      }
-    } catch (e) {
+    if (res.isSuccessful()) {
       LucaLoading.dismiss();
-      print(e);
+      List choices = res.data["choices"];
+      if (choices.isNotEmpty) {
+        String? answer = choices.first["message"]["content"];
+        if (answer != null) {
+          TextModel item = TextModel(sendType: SendType.other, content: answer);
+          state.items.add(item);
+          state.items.refresh();
+          toBottomOffset();
+        }
+      }
+    } else {
+      LucaLoading.showToast(res.message);
     }
   }
 
