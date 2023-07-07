@@ -4,6 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
 import 'package:scrollview_observer/scrollview_observer.dart';
 
+import '../../routers/router.dart';
 import 'state.dart';
 
 class OtherLogic extends GetxController {
@@ -35,13 +36,14 @@ class OtherLogic extends GetxController {
   }
 
   void testFile() async {
-    FilePickerResult? result =
-        await FilePicker.platform.pickFiles(allowMultiple: true);
-    if (result != null) {
-      var files = result.files.map((e) => File(e.path ?? "")).toList();
-      print(files);
-      // File file = File(result.files.single.path ?? "");
-      // print(file.path);
-    }
+    AppPage.to(Routes.setting);
+    // FilePickerResult? result =
+    //     await FilePicker.platform.pickFiles(allowMultiple: true);
+    // if (result != null) {
+    //   var files = result.files.map((e) => File(e.path ?? "")).toList();
+    //   print(files);
+    //   // File file = File(result.files.single.path ?? "");
+    //   // print(file.path);
+    // }
   }
 }

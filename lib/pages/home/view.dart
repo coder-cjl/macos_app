@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chatgpt_mac/pages/openai/auido/view.dart';
+import 'package:flutter_chatgpt_mac/pages/openai/audio/view.dart';
 import 'package:flutter_chatgpt_mac/pages/openai/chat/view.dart';
 import 'package:flutter_chatgpt_mac/pages/openai/image/view.dart';
 import 'package:flutter_chatgpt_mac/pages/openai/login/manager.dart';
 import 'package:flutter_chatgpt_mac/pages/openai/login/view.dart';
+import 'package:flutter_chatgpt_mac/pages/openai/setting/view.dart';
 import 'package:flutter_chatgpt_mac/pages/other/view.dart';
 import 'package:get/get.dart';
 import 'package:macos_ui/macos_ui.dart';
@@ -42,6 +43,7 @@ class HomePage extends StatelessWidget {
                   label: Text("Other"),
                 ),
               ],
+              itemSize: SidebarItemSize.large,
               currentIndex: state.currentIndex.value,
               onChanged: (index) {
                 state.currentIndex.value = index;
@@ -49,7 +51,26 @@ class HomePage extends StatelessWidget {
             ),
           );
         },
+        bottom: Row(
+          children: [
+            MacosIconButton(
+              icon: const Icon(Icons.settings),
+              onPressed: () {
+                // Navigator.of(context).push(
+                //     MaterialPageRoute(builder: (context) => SettingPage()));
+                logic.openSetting();
+              },
+              semanticLabel: "设置",
+            ),
+          ],
+        ),
       ),
+      // endSidebar: Sidebar(
+      //   builder: (BuildContext context, ScrollController scrollController) {
+      //     return Center();
+      //   },
+      //   minWidth: 200,
+      // ),
       child: Obx(
         () => IndexedStack(
           index: state.currentIndex.value,

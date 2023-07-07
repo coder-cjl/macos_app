@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chatgpt_mac/pages/home/view.dart';
 import 'package:flutter_chatgpt_mac/pages/openai/login/manager.dart';
+import 'package:flutter_chatgpt_mac/routers/router.dart';
 import 'package:get/get.dart';
 import 'package:luca_flutter_common/luca_loading.dart';
 import 'package:macos_ui/macos_ui.dart';
@@ -12,9 +13,9 @@ void main() async {
   await UserOpenAiUtils.instance.setup();
 
   WindowOptions options = const WindowOptions(
-    size: Size(800, 600),
-    maximumSize: Size(800, 600),
-    minimumSize: Size(800, 600),
+    size: Size(1000, 800),
+    maximumSize: Size(1000, 800),
+    minimumSize: Size(1000, 800),
     center: true,
     backgroundColor: Colors.transparent,
   );
@@ -26,16 +27,19 @@ void main() async {
       darkTheme: MacosThemeData.dark(),
       themeMode: ThemeMode.light,
       debugShowCheckedModeBanner: false,
-      home: GetMaterialApp(
-        home: HomePage(),
-        debugShowCheckedModeBanner: false,
-        builder: (context, widget) {
-          return MediaQuery(
-            data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-            child: LucaLoading.init()(context, widget),
-          );
-        },
-      ),
+      initialRoute: Routes.root,
+      // home: GetMaterialApp(
+      //   home: HomePage(),
+      //   initialRoute: Routes.root,
+      //   getPages: AppPage.pages,
+      //   debugShowCheckedModeBanner: false,
+      //   builder: (context, widget) {
+      //     return MediaQuery(
+      //       data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+      //       child: LucaLoading.init()(context, widget),
+      //     );
+      //   },
+      // ),
       builder: (context, widget) {
         return MediaQuery(
           data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),

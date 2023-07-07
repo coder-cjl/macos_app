@@ -6,8 +6,8 @@ import 'package:macos_ui/macos_ui.dart';
 import 'logic.dart';
 
 class AuidoPage extends StatelessWidget {
-  final logic = Get.put(AuidoLogic());
-  final state = Get.find<AuidoLogic>().state;
+  final logic = Get.put(AudioLogic());
+  final state = Get.find<AudioLogic>().state;
 
   @override
   Widget build(BuildContext context) {

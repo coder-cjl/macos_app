@@ -19,19 +19,19 @@ class ChatLogic extends GetxController {
     state.observerController =
         ListObserverController(controller: state.scrollController);
 
-    // Future.delayed(const Duration(seconds: 1), () {
-    //   var item = TextModel(sendType: SendType.me, content: "这是问题");
-    //   state.items.value.add(item);
-    //   state.items.refresh();
-    //   toBottomOffset();
-    //
-    //   Future.delayed(const Duration(seconds: 2), () {
-    //     var item = TextModel(sendType: SendType.other, content: demo);
-    //     state.items.value.add(item);
-    //     state.items.refresh();
-    //     toBottomOffset();
-    //   });
-    // });
+    Future.delayed(const Duration(seconds: 1), () {
+      var item = TextModel(sendType: SendType.me, content: "这是问题");
+      state.items.value.add(item);
+      state.items.refresh();
+      toBottomOffset();
+
+      Future.delayed(const Duration(seconds: 2), () {
+        var item = TextModel(sendType: SendType.other, content: demo);
+        state.items.value.add(item);
+        state.items.refresh();
+        toBottomOffset();
+      });
+    });
 
     super.onInit();
   }
@@ -316,15 +316,20 @@ class ChatLogic extends GetxController {
     return Container(
       width: 25,
       height: 25,
-      alignment: Alignment.center,
+      // color: Colors.red,
       decoration: BoxDecoration(
         color: c,
         borderRadius: const BorderRadius.all(Radius.circular(25)),
       ),
-      child: Text(
-        name,
-        style: const TextStyle(
-          color: Colors.white,
+      child: Center(
+        child: Text(
+          name,
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 14,
+            height: 1.05,
+          ),
         ),
       ),
     );
